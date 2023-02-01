@@ -2,5 +2,5 @@
 2016.10.21-i emelt szintű érettségi Telefonos ügyfélszolgálat programozási feladatának csoportos megoldása
 
 Csapattagok:
- - Borbély Dominik Péter
- - Luo Hong Jun
+ * Borbély Dominik Péter
+ * Luo Hong Jun
