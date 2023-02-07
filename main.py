@@ -1,5 +1,10 @@
+from Megoldas import Megoldas
+
+
 def main() -> None:
-    pass
+    # beolvasás
+    phone: Megoldas = Megoldas('hivas.txt')
+    # print(len(phone.phone_calls))  # test hogy működik e a inicializálás
 
 
 if __name__ == "__main__":
