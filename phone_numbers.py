@@ -5,6 +5,15 @@ class phone_numbers:
     Last_hour: int
     Last_min: int
     Last_sec: int
+        
+    def mpbe(self, hour: int, minute: int, second: int):
+        return hour * 3600 + minute * 60 + second
+
+    @property
+    def hivas_hossz(self):
+        hossz: int = 0
+        hossz = self.mpbe(self.Last_hour, self.Last_min, self.Last_sec) - self.mpbe(self.First_hour, self.First_min, self.First_sec)
+        return hossz
 
     def __init__(self, line: str):
         First_hours, First_mins, First_secs, Last_hours, Last_mins, Last_secs = line.split(' ')
