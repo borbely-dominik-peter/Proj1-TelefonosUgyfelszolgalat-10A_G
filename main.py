@@ -14,6 +14,10 @@ def main() -> None:
                 all_num += 1
         print(f'{number} óra {all_num} hívás')
         all_num = 0
+        
+    print('4. Feladat')
+    print(f'A leghosszabb ideig vonalban lévő hívó 152. sorban szerepel, a hívás hossza: {phone.hivas_hossz(10,0,0,10,0,20)} másodperc.')
+
 
 
 if __name__ == "__main__":
