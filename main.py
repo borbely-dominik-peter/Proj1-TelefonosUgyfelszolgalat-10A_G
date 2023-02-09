@@ -14,6 +14,19 @@ def main() -> None:
                 all_num += 1
         print(f'{number} óra {all_num} hívás')
         all_num = 0
+        
+    print('4. Feladat')
+    hivas_hossz: int = 0
+    sor_szamlalo: int = 0
+    for e in phone.phone_calls:
+        if e.hivas_hossz > hivas_hossz:
+            hivas_hossz = e.hivas_hossz
+    for e in phone.phone_calls:
+        sor_szamlalo += 1
+        if e.hivas_hossz == hivas_hossz:
+            break
+    print(f'A leghosszabb ideig vonalban lévő hívó {sor_szamlalo} sorban szerepel, a hívás hossza: {hivas_hossz} másodperc.')
+
 
 
 if __name__ == "__main__":
