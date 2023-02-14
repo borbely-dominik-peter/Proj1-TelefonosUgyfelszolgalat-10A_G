@@ -15,3 +15,18 @@ class Megoldas:
 
     def mpbe(self, hour: int, minute: int, second: int):
         return hour * 3600 + minute * 60 + second
+    
+    def felvett_hívás_száma(self, sor: str) -> int:
+        elozo_ertek: int = 0
+        osszes: int = 0
+        input_hour, input_min, input_sec = sor.split(" ")
+        input_hour = int(input_hour)
+        input_min = int(input_min)
+        input_sec = int(input_sec)
+        for e in self.phone_calls:
+            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) >= self.mpbe(input_hour, input_min, input_sec):
+                break
+            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > elozo_ertek and e.Last_hour >= 8 and e.First_hour <= 11:
+                osszes += 1
+                elozo_ertek = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+        return osszes

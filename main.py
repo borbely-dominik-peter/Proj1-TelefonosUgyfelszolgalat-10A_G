@@ -26,6 +26,11 @@ def main() -> None:
         if e.hivas_hossz == hivas_hossz:
             break
     print(f'A leghosszabb ideig vonalban lévő hívó {sor_szamlalo} sorban szerepel, a hívás hossza: {hivas_hossz} másodperc.')
+    
+    print("5. Feladat")
+    input_szamok: str = input("Adjon meg egy idopontot! (ora perc masodperc) ")
+    print(phone.felvett_hívás_száma(input_szamok))
+
 
 
 
