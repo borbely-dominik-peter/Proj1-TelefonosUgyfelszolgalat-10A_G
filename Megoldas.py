@@ -16,6 +16,7 @@ class Megoldas:
     def mpbe(self, hour: int, minute: int, second: int):
         return hour * 3600 + minute * 60 + second
 
+
     def accepted_caller_num(self, line: str) -> int:
         previous_values: int = 0
         all_check: int = 0
@@ -26,6 +27,7 @@ class Megoldas:
         for e in self.phone_calls:
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) >= self.mpbe(input_hour, input_min, input_sec):
                 break
+
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
                 all_check += 1
                 previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
@@ -51,3 +53,4 @@ class Megoldas:
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < first_larger and e.Last_hour >= 8 and e.First_hour <= 11:
                 all_waiting_peoples -= 1
         return all_waiting_peoples
+
