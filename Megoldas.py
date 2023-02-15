@@ -3,6 +3,44 @@ from phone_numbers import phone_numbers
 
 class Megoldas:
     phone_calls: list[phone_numbers]
+        
+    @property
+    def call_for_all_hour(self):
+        all_num: int = 0
+        for number in range(8, 12):
+            for e in self.phone_calls:
+                if e.First_hour == number:
+                    all_num += 1
+            print(f'{number} óra {all_num} hívás')
+        return all_num
+
+    @property
+    def longest_call_length(self):
+        call_length: int = 0
+        for e in self.phone_calls:
+            if e.hivas_hossz > call_length:
+                call_length = e.hivas_hossz
+        return call_length
+
+    @property
+    def longest_call_line(self):
+        line_counter: int = 0
+        for e in self.phone_calls:
+            line_counter += 1
+            if e.hivas_hossz == self.longest_call_length:
+                break
+        return line_counter
+
+    @property
+    def last_caller_num(self):
+        previous_values: int = 0
+        all_check: int = 0
+        call_counter: int = 0
+        for e in self.phone_calls:
+            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
+                all_check += 1
+                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+        return all_check
 
     def __init__(self, txt_name: str):
         self.phone_calls = []
