@@ -34,6 +34,7 @@ class Megoldas:
     def waiting_people_num(self, line: str) -> int:
         all_waiting_peoples: int = 0
         first_larger: int = 0
+        phone_calls_subset: list[phone_numbers] = []
         input_hour, input_min, input_sec = line.split(" ")
         input_hour = int(input_hour)
         input_min = int(input_min)
@@ -45,6 +46,8 @@ class Megoldas:
         for e in self.phone_calls:
             if e.mpbe(e.First_hour, e.First_min, e.First_sec) < self.mpbe(input_hour, input_min, input_sec) and e.First_hour >= 8 and e.First_hour <= 11 and e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) != first_larger:
                 all_waiting_peoples += 1
-                if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < first_larger and e.Last_hour >= 8 and e.First_hour <= 11:
-                    all_waiting_peoples -= 1
+                phone_calls_subset.append(e)
+        for e in phone_calls_subset:
+            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < first_larger and e.Last_hour >= 8 and e.First_hour <= 11:
+                all_waiting_peoples -= 1
         return all_waiting_peoples

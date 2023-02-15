@@ -28,8 +28,10 @@ def main() -> None:
     print(f'A leghosszabb ideig vonalban lévő hívó {sor_szamlalo} sorban szerepel, a hívás hossza: {hivas_hossz} másodperc.')
     print("5. Feladat")
     input_numbers: str = input("Adjon meg egy idopontot! (ora perc masodperc) ")
-    print(phone.accepted_caller_num(input_numbers))
-    print(phone.waiting_people_num(input_numbers))
+    # print(phone.accepted_caller_num(input_numbers))
+    # print(phone.waiting_people_num(input_numbers))
+    # print(f'A várakozók száma: {phone.waiting_people_num(input_numbers)} a beszélo a {phone.accepted_caller_num(input_numbers)}. hívó.')
+    print(f'{"Nem volt beszélő" if phone.waiting_people_num(input_numbers) == 0 else f"A várakozók száma: {phone.waiting_people_num(input_numbers)} a beszélo a {phone.accepted_caller_num(input_numbers)}. hívó."}')
 
 
 if __name__ == "__main__":
