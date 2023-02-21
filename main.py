@@ -20,17 +20,10 @@ def main() -> None:
 
     print("5. Feladat")
     input_numbers: str = input("Adjon meg egy idopontot! (ora perc masodperc) ")
-    # print(phone.accepted_caller_num(input_numbers))
-    # print(phone.waiting_people_num(input_numbers))
-    # print(f'A várakozók száma: {phone.waiting_people_num(input_numbers)} a beszélo a {phone.accepted_caller_num(input_numbers)}. hívó.')
     print(f'{"Nem volt beszélő" if phone.waiting_people_num(input_numbers) == 0 else f"A várakozók száma: {phone.waiting_people_num(input_numbers)} a beszélo a {phone.accepted_caller_num(input_numbers)}. hívó."}')
 
     print("6. Feladat")
-    # print(phone.last_caller_num)
-    # print(phone.call_for_all_hour)
-    # print(phone.accepted_caller_num_without_input_check)
-    print(phone.accepted_caller_before_final_check)
-    print(f'Az utolso telefonalo adatai a(z) {phone.call_for_all_hour}. sorban vannak, {phone.last_caller_wait_length}  masodpercig vart.')
+    print(f'Az utolso telefonalo adatai a(z) {phone.call_for_all_hour}. sorban vannak, {phone.last_caller_wait_length} masodpercig vart.')
 
 
 if __name__ == "__main__":
