@@ -3,15 +3,19 @@ from phone_numbers import phone_numbers
 
 class Megoldas:
     phone_calls: list[phone_numbers]
-        
+
     @property
     def call_for_all_hour(self):
         all_num: int = 0
+        breaker: int = 0
         for number in range(8, 12):
             for e in self.phone_calls:
-                if e.First_hour == number:
+                if e.Last_hour == 8 and breaker == 0:
                     all_num += 1
-            print(f'{number} óra {all_num} hívás')
+                else:
+                    if e.First_hour == number:
+                        all_num += 1
+                        breaker += 1
         return all_num
 
     @property
@@ -31,16 +35,101 @@ class Megoldas:
                 break
         return line_counter
 
+    # @property
+    # def last_caller_wait_time(self):
+    #     last_caller_id = self.call_for_all_hour
+    #     last_call_object = self.phone_calls[last_caller_id - 1]
+    #     last_call_object_mp_value: int = self.mpbe(last_call_object.Last_hour, last_call_object.Last_min, last_call_object.Last_sec)
+    #     smaller_than_last_value: int = last_call_object_mp_value
+    #     for e in self.phone_calls:
+    #         if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < last_call_object_mp_value:
+    #             smaller_than_last_value = last_call_object_mp_value - e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+    #     return smaller_than_last_value
+
+    # @property
+    # def accepted_caller_num_without_input_check(self) -> int:
+    #     previous_values: int = 0
+    #     all_check: int = 0
+    #     id_all: int = 0
+    #     for e in self.phone_calls:
+    #         if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
+    #             all_check += 1
+    #             previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+    #         id_all += 1
+    #     return id_all
+
+    # @property
+    # def accepted_caller_num_without_input_check_num(self) -> int:
+    #     previous_values: int = 0
+    #     all_check: int = 0
+    #     id_all: int = 0
+    #     for e in self.phone_calls:
+    #         if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
+    #             all_check += 1
+    #             previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+    #         id_all += 1
+    #     number: int = self.mpbe(self.phone_calls[id_all - 1].First_hour, self.phone_calls[id_all - 1].First_min, self.phone_calls[id_all - 1].First_sec)
+    #     return number
+
+    # @property
+    # def accepted_caller_before_final_check(self) -> int:
+    #     value: int = self.accepted_caller_num_without_input_check
+    #     previous_values: int = 0
+    #     all_check: int = 0
+    #     id_all: int = 0
+    #     mp_value: int = 0
+    #     for e in self.phone_calls:
+    #         if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
+    #             all_check += 1
+    #             previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+    #         if all_check == value - 1:
+    #             break
+    #         id_all += 1
+    #     mp_item: phone_numbers = self.phone_calls[id_all - 2]
+    #     mp_value: int = self.mpbe(mp_item.Last_hour, mp_item.Last_min, mp_item.Last_hour)
+    #     return mp_value
+
+    # @property
+    # def last_caller_wait_length(self):
+    #     side_value: int = self.accepted_caller_num_without_input_check_num
+    #     main_value: int = self.accepted_caller_before_final_check
+    #     return main_value - side_value¨
+
     @property
-    def last_caller_num(self):
-        previous_values: int = 0
+    def F_6_1(self):  # utolsó hívó száma
         all_check: int = 0
-        call_counter: int = 0
+        previous_values: int = 0
         for e in self.phone_calls:
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
                 all_check += 1
                 previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
         return all_check
+
+    @property
+    def F_6_1_5(self):  # utolsó előtti hívó száma
+        all_check: int = 0
+        previous_values: int = 0
+        for e in self.phone_calls:
+            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
+                all_check += 1
+                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+        return all_check
+
+    @property
+    def F_6_2(self):  # utolsó hívó lerakás mpbe
+        last_caller: int = self.F_6_1
+        all_check: int = 0
+        previous_values: int = 0
+        value: int = 0
+        for e in self.phone_calls:
+            value += 1
+            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
+                all_check += 1
+                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+            if all_check == last_caller:
+                break
+        value = self.mpbe(self.phone_calls[all_check].Last_hour, self.phone_calls[all_check].Last_min, self.phone_calls[all_check].Last_sec)
+        return value
 
     def __init__(self, txt_name: str):
         self.phone_calls = []
@@ -54,7 +143,6 @@ class Megoldas:
     def mpbe(self, hour: int, minute: int, second: int):
         return hour * 3600 + minute * 60 + second
 
-
     def accepted_caller_num(self, line: str) -> int:
         previous_values: int = 0
         all_check: int = 0
@@ -65,7 +153,6 @@ class Megoldas:
         for e in self.phone_calls:
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) >= self.mpbe(input_hour, input_min, input_sec):
                 break
-
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
                 all_check += 1
                 previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
@@ -91,4 +178,3 @@ class Megoldas:
             if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < first_larger and e.Last_hour >= 8 and e.First_hour <= 11:
                 all_waiting_peoples -= 1
         return all_waiting_peoples
-
