@@ -1,142 +1,122 @@
-from phone_numbers import phone_numbers
+from Call import Call
 
 
 class Megoldas:
-    phone_calls: list[phone_numbers]
+    _phone_calls: list[Call]
 
     @property
-    def call_for_all_hour(self):
-        all_num: int = 0
-        breaker: int = 0
-        for number in range(8, 12):
-            for e in self.phone_calls:
-                if e.Last_hour == 8 and breaker == 0:
-                    all_num += 1
-                else:
-                    if e.First_hour == number:
-                        all_num += 1
-                        breaker += 1
-        return all_num
+    def stat_hours(self):  # 3. task
+        stat_h: dict[int, int] = {}
+        for e in self._phone_calls:
+            if e.first_hour in stat_h:
+                stat_h[e.first_hour] += 1
+            else:
+                stat_h[e.first_hour] = 1
+        return dict(sorted(stat_h.items(), key=lambda t: int(t[0])))
 
     @property
-    def longest_call_length(self):
+    def stat_hours_print(self):  # 3. task
+        values: str = ''
+        for key, value in self.stat_hours.items():
+            values += f'{key} óra {value} hívás\n'
+        return values
+
+    @property
+    def longest_call_length(self):  # 4. task
         call_length: int = 0
-        for e in self.phone_calls:
+        for e in self._phone_calls:
             if e.hivas_hossz > call_length:
                 call_length = e.hivas_hossz
         return call_length
 
     @property
-    def longest_call_line(self):
+    def longest_call_line(self):  # 4. task
         line_counter: int = 0
-        for e in self.phone_calls:
+        for e in self._phone_calls:
             line_counter += 1
             if e.hivas_hossz == self.longest_call_length:
                 break
         return line_counter
 
     @property
-    def last_caller_wait(self):
-        last_caller_id = self.call_for_all_hour
-        last_call_object = self.phone_calls[last_caller_id - 1]
-        last_call_object_mp_value: int = self.mpbe(last_call_object.Last_hour, last_call_object.Last_min, last_call_object.Last_sec)
-        smaller_than_last_value: int = last_call_object_mp_value
-        for e in self.phone_calls:
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < last_call_object_mp_value:
-                smaller_than_last_value = last_call_object_mp_value - e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
-        return smaller_than_last_value
+    def accepted_calls(self):  # 5/6.task
+        accepted_list: list[Call] = []
+        previous_values: int = 0
+        for e in self._phone_calls:
+            if e.end_in_sec > previous_values and e.last_hour >= 8 and e.first_hour <= 11:
+                accepted_list.append(e)
+                previous_values = e.end_in_sec
+        return accepted_list
 
     @property
-    def final_caller_num(self) -> int:
-        previous_values: int = 0
-        all_check: int = 0
-        id_all: int = self.call_for_all_hour - 1
-        for e in self.phone_calls:
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
-                all_check += 1
-                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
-        number: int = self.mpbe(self.phone_calls[id_all].First_hour, self.phone_calls[id_all].First_min, self.phone_calls[id_all].First_sec)
-        return number
-
-    @property
-    def final_caller(self) -> int:
-        previous_values: int = 0
-        all_check: int = 0
-        id_all: int = self.call_for_all_hour - 1
-        for e in self.phone_calls:
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
-                all_check += 1
-                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
-        return all_check
-
-    @property
-    def accepted_caller_before_final(self) -> int:
-        value: int = self.final_caller
-        previous_values: int = 0
-        all_check: int = 0
-        mp_value: int = 0
-        index_count: int = 0
-        for e in self.phone_calls:
-            index_count += 1
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
-                all_check += 1
-                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
-            if all_check == value - 1:
+    def last_accepted_call_line(self):  # 6. task
+        counter: int = 0
+        for e in self._phone_calls:
+            if e == self.accepted_calls[-1]:
+                counter += 1
                 break
-        mp_item: phone_numbers = self.phone_calls[index_count - 1]
-        mp_value: int = self.mpbe(mp_item.Last_hour, mp_item.Last_min, mp_item.Last_sec)
-        return mp_value
+            else:
+                counter += 1
+        return counter
 
     @property
-    def last_caller_wait_length(self):
-        side_value: int = self.final_caller_num 
-        main_value: int = self.accepted_caller_before_final
-        return main_value - side_value
+    def last_caller_waiting_time(self):  # 6. task
+        last_value: int = 0
+        second_last_value: int = 0
+        for e in self._phone_calls:
+            if e == self.accepted_calls[-1]:
+                last_value = e.start_in_sec
+                break
+            elif e == self.accepted_calls[-2]:
+                second_last_value = e.end_in_sec
+        return second_last_value - last_value
+
+    @property
+    def accepted_callers_text(self): #7. Task
+        index_checker: int = 0
+        for e in self._phone_calls:
+            if e in self.accepted_calls:
+                with open('sikeres.txt','a',encoding='UTF-8') as file:
+                    file.write(f'{index_checker} {e.first_hour} {e.first_min} {e.first_sec} {e.last_hour} {e.last_min} {e.last_sec}\n')
+            index_checker += 1
+        return "sikeres.txt elkészült"
 
     def __init__(self, txt_name: str):
-        self.phone_calls = []
-        self.source_read(txt_name)
+        self._phone_calls = []
+        self._source_read(txt_name)
 
-    def source_read(self, txt_name: str) -> None:
+    def _source_read(self, txt_name: str) -> None:
         with open(txt_name, 'r', encoding='utf-8') as file:
             for line in file.read().splitlines():
-                self.phone_calls.append(phone_numbers(line))
+                self._phone_calls.append(Call(line))
 
-    def mpbe(self, hour: int, minute: int, second: int):
-        return hour * 3600 + minute * 60 + second
-
-    def accepted_caller_num(self, line: str) -> int:
-        previous_values: int = 0
-        all_check: int = 0
+    def waiting_people_num(self, line: str) -> int:  # 5. task
+        waiting_people_candidate: list[Call] = []
         input_hour, input_min, input_sec = line.split(" ")
+        a_line: str = ''
+        a_line: str = f'{input_hour} {input_min} {input_sec} {input_hour} {input_min} {input_sec}'
+        self._phone_calls.append(Call(a_line))
         input_hour = int(input_hour)
         input_min = int(input_min)
         input_sec = int(input_sec)
-        for e in self.phone_calls:
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) >= self.mpbe(input_hour, input_min, input_sec):
-                break
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > previous_values and e.Last_hour >= 8 and e.First_hour <= 11:
-                all_check += 1
-                previous_values = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
-        return all_check
+        a_line_value: int = self._phone_calls[-1].start_in_sec
+        self._phone_calls.pop()
+        for e in self._phone_calls:
+            if e.end_in_sec >= a_line_value and e.start_in_sec <= a_line_value:
+                waiting_people_candidate.append(e)
+        return len(waiting_people_candidate) - 1
 
-    def waiting_people_num(self, line: str) -> int:
-        all_waiting_peoples: int = 0
-        first_larger: int = 0
-        phone_calls_subset: list[phone_numbers] = []
+    def accepted_caller_num(self, line:str) -> int:  # 5. task
         input_hour, input_min, input_sec = line.split(" ")
-        input_hour = int(input_hour)
-        input_min = int(input_min)
-        input_sec = int(input_sec)
-        for e in self.phone_calls:
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) > self.mpbe(input_hour, input_min, input_sec):
-                first_larger = e.mpbe(e.Last_hour, e.Last_min, e.Last_sec)
+        a_line: str = ''
+        a_line: str = f'{input_hour} {input_min} {input_sec} {input_hour} {input_min} {input_sec}'
+        self._phone_calls.append(Call(a_line))
+        a_line_value: int = self._phone_calls[-1].start_in_sec
+        self._phone_calls.pop()
+        counter: int = 0
+        for e in self.accepted_calls:
+            if e.end_in_sec >= a_line_value:
                 break
-        for e in self.phone_calls:
-            if e.mpbe(e.First_hour, e.First_min, e.First_sec) < self.mpbe(input_hour, input_min, input_sec) and e.First_hour >= 8 and e.First_hour <= 11 and e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) != first_larger:
-                all_waiting_peoples += 1
-                phone_calls_subset.append(e)
-        for e in phone_calls_subset:
-            if e.mpbe(e.Last_hour, e.Last_min, e.Last_sec) < first_larger and e.Last_hour >= 8 and e.First_hour <= 11:
-                all_waiting_peoples -= 1
-        return all_waiting_peoples
+            else:
+                counter += 1
+        return counter
