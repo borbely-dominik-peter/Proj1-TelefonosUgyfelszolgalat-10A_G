@@ -19,6 +19,9 @@ def main() -> None:
     print("6. Feladat")
     print(f'Az utolso telefonalo adatai a(z) {phone.last_accepted_call_line}. sorban vannak, {phone.last_caller_waiting_time} masodpercig vart.')
 
+    print("7. Feladat")
+    print(phone.accepted_callers_text)
+
 
 if __name__ == "__main__":
     main()
