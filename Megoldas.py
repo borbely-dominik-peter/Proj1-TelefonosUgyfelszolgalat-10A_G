@@ -12,7 +12,7 @@ class Megoldas:
                 stat_h[e.first_hour] += 1
             else:
                 stat_h[e.first_hour] = 1
-        return dict(sorted(stat_h.items(), key=lambda t: int(t[0])))
+        return stat_h
 
     @property
     def stat_hours_print(self):  # 3. task
@@ -80,6 +80,16 @@ class Megoldas:
                     file.write(f'{index_checker} {e.first_hour} {e.first_min} {e.first_sec} {e.last_hour} {e.last_min} {e.last_sec}\n')
             index_checker += 1
         return "sikeres.txt elkészült"
+                break
+            else:
+                counter += 1
+        return counter
+
+    @property
+    def last_caller_waiting_time(self):  # 6. task
+        last_value: int = self.accepted_calls[-1].start_in_sec
+        second_last_value: int = self.accepted_calls[-2].end_in_sec
+        return second_last_value - last_value
 
     def __init__(self, txt_name: str):
         self._phone_calls = []
@@ -106,14 +116,14 @@ class Megoldas:
                 waiting_people_candidate.append(e)
         return len(waiting_people_candidate) - 1
 
-    def accepted_caller_num(self, line:str) -> int:  # 5. task
+    def accepted_caller_num(self, line: str) -> int:  # 5. task
         input_hour, input_min, input_sec = line.split(" ")
         a_line: str = ''
         a_line: str = f'{input_hour} {input_min} {input_sec} {input_hour} {input_min} {input_sec}'
         self._phone_calls.append(Call(a_line))
         a_line_value: int = self._phone_calls[-1].start_in_sec
-        self._phone_calls.pop()
         counter: int = 0
+        self._phone_calls.pop()
         for e in self.accepted_calls:
             if e.end_in_sec >= a_line_value:
                 break
