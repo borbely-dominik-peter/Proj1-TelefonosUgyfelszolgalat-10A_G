@@ -1,4 +1,3 @@
-from os import stat
 from phone_numbers import phone_numbers
 
 
@@ -13,14 +12,14 @@ class Megoldas:
                 stat_h[e.first_hour] += 1
             else:
                 stat_h[e.first_hour] = 1
-        return stat_h
+        return dict(sorted(stat_h.items(), key=lambda t: int(t[0])))
 
     @property
-    def stat_print(self):
-        string_stat: str = ''
-        for e in self.stat_hours:
-            string_stat += f'\t{e.keys()} óra {e.values()} hívás\n'
-        return string_stat
+    def stat_hours_print(self):
+        values: str = ''
+        for key, value in self.stat_hours.items():
+            values += f'{key} óra {value} hívás\n'
+        return values
 
     @property
     def call_for_all_hour(self):

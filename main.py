@@ -3,11 +3,11 @@ from Megoldas import Megoldas
 
 def main() -> None:
     # beolvasás
-    phone: Megoldas = Megoldas('hivastest.txt')
+    phone: Megoldas = Megoldas('hivas.txt')
     # print(len(phone.phone_calls))  # test hogy működik e a inicializálás
 
     print('3. feladat')
-    print(phone.stat_print)
+    print(phone.stat_hours_print)
 
     print('4. Feladat')
     print(f'A leghosszabb ideig vonalban lévő hívó {phone.longest_call_line} sorban szerepel, a hívás hossza: {phone.longest_call_length} másodperc.')
