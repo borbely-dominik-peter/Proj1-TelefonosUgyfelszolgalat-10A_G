@@ -14,8 +14,8 @@ def main() -> None:
 
     print("5. Feladat")
     input_numbers: str = input("Adjon meg egy idopontot! (ora perc masodperc) ")
-    print(phone.accepted_caller_num(input_numbers))
-    #  print(f'{"Nem volt beszélő" if phone.waiting_people_num(input_numbers) == 0 else f"A várakozók száma: {phone.waiting_people_num(input_numbers)} a beszélo a {phone.accepted_caller_num(input_numbers)}. hívó."}')
+    print(f'{"" if phone.accepted_caller_num(input_numbers) >= 999 else ""}')
+    print(f'{"Nem volt beszélő" if phone.waiting_people_num == 0 else f"A várakozók száma: {phone.waiting_people_num} a beszélo a {phone.accepted_caller_num(input_numbers)}. hívó."}')
 
     print("6. Feladat")
     print(f'Az utolso telefonalo adatai a(z) {phone.last_accepted_call_line}. sorban vannak, {phone.last_caller_waiting_time} masodpercig vart.')
