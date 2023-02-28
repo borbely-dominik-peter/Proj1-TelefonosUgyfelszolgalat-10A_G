@@ -1,11 +1,10 @@
-class phone_numbers:
+class Call:
     first_hour: int
     first_min: int
     first_sec: int
     last_hour: int
     last_min: int
     last_sec: int
-    had_a_call: bool
 
     @property
     def start_in_sec(self):
