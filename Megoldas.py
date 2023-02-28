@@ -12,7 +12,7 @@ class Megoldas:
                 stat_h[e.first_hour] += 1
             else:
                 stat_h[e.first_hour] = 1
-        return dict(sorted(stat_h.items(), key=lambda t: int(t[0])))
+        return stat_h
 
     @property
     def stat_hours_print(self):  # 3. task
@@ -75,14 +75,8 @@ class Megoldas:
 
     @property
     def last_caller_waiting_time(self):  # 6. task
-        last_value: int = 0
-        second_last_value: int = 0
-        for e in self._phone_calls:
-            if e == self.accepted_calls[-1]:
-                last_value = e.start_in_sec
-                break
-            elif e == self.accepted_calls[-2]:
-                second_last_value = e.end_in_sec
+        last_value: int = self.accepted_calls[-1].start_in_sec
+        second_last_value: int = self.accepted_calls[-2].end_in_sec
         return second_last_value - last_value
 
     # @property
