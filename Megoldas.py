@@ -63,19 +63,6 @@ class Megoldas:
         return accepted_list
 
     @property
-    def waiting_people_num(self):  # 5. task
-        a_line_value: int = self._phone_calls[-1].start_in_sec
-        waiting_people_candidate: list[Call] = []
-        self._phone_calls.pop()
-        for e in self._phone_calls:
-            if e.end_in_sec >= a_line_value and e.start_in_sec <= a_line_value:
-                waiting_people_candidate.append(e)
-        if len(waiting_people_candidate) - 1 == -1:
-            return 0
-        else:
-            return len(waiting_people_candidate) - 1
-
-    @property
     def last_accepted_call_line(self):  # 6. task
         counter: int = 0
         for e in self._phone_calls:
@@ -165,16 +152,26 @@ class Megoldas:
             for line in file.read().splitlines():
                 self._phone_calls.append(Call(line))
 
-    def accepted_caller_num(self, line: str) -> int:  # 5. task
+    def waiting_people_num(self, line: str):  # 5. task
+        waiting_people_candidate: list[Call] = []
         input_hour, input_min, input_sec = line.split(" ")
         a_line: str = ''
         a_line: str = f'{input_hour} {input_min} {input_sec} {input_hour} {input_min} {input_sec}'
         self._phone_calls.append(Call(a_line))
-        counter: int = 0
-        a_line_value: int = self._phone_calls[-1].start_in_sec
         input_hour = int(input_hour)
         input_min = int(input_min)
         input_sec = int(input_sec)
+        a_line_value: int = self._phone_calls[-1].start_in_sec
+        for e in self._phone_calls:
+            if e.end_in_sec >= a_line_value and e.start_in_sec <= a_line_value:
+                waiting_people_candidate.append(e)
+        return len(waiting_people_candidate) - 1
+
+    @property
+    def accepted_caller_num(self) -> int:  # 5. task
+        a_line_value: int = self._phone_calls[-1].start_in_sec
+        counter: int = 0
+        self._phone_calls.pop()
         for e in self.accepted_calls:
             if e.end_in_sec >= a_line_value:
                 break
