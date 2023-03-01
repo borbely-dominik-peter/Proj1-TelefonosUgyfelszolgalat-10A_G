@@ -59,31 +59,27 @@ class Megoldas:
                 counter += 1
         return counter
 
-    @property
-    def last_caller_waiting_time(self):  # 6. task
-        last_value: int = 0
-        second_last_value: int = 0
-        for e in self._phone_calls:
-            if e == self.accepted_calls[-1]:
-                last_value = e.start_in_sec
-                break
-            elif e == self.accepted_calls[-2]:
-                second_last_value = e.end_in_sec
-        return second_last_value - last_value
+    # @property
+    # def last_caller_waiting_time(self):  # 6. task
+    #     last_value: int = 0
+    #     second_last_value: int = 0
+    #     for e in self._phone_calls:
+    #         if e == self.accepted_calls[-1]:
+    #             last_value = e.start_in_sec
+    #             break
+    #         elif e == self.accepted_calls[-2]:
+    #             second_last_value = e.end_in_sec
+    #     return second_last_value - last_value
 
     @property
-    def accepted_callers_text(self): #7. Task
+    def accepted_callers_text(self):  # 7. Task
         index_checker: int = 0
         for e in self._phone_calls:
             if e in self.accepted_calls:
-                with open('sikeres.txt','a',encoding='UTF-8') as file:
+                with open('sikeres.txt', 'a', encoding='UTF-8') as file:
                     file.write(f'{index_checker} {e.first_hour} {e.first_min} {e.first_sec} {e.last_hour} {e.last_min} {e.last_sec}\n')
             index_checker += 1
         return "sikeres.txt elkészült"
-                break
-            else:
-                counter += 1
-        return counter
 
     @property
     def last_caller_waiting_time(self):  # 6. task
