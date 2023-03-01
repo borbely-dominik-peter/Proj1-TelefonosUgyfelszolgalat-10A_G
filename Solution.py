@@ -1,7 +1,7 @@
 from Call import Call
 
 
-class Megoldas:
+class Solution:
     _phone_calls: list[Call]
 
     @property
@@ -25,8 +25,8 @@ class Megoldas:
     def longest_call_length(self):  # 4. task
         call_length: int = 0
         for e in self._phone_calls:
-            if e.hivas_hossz > call_length:
-                call_length = e.hivas_hossz
+            if e.call_length > call_length:
+                call_length = e.call_length
         return call_length
 
     @property
@@ -34,7 +34,7 @@ class Megoldas:
         line_counter: int = 0
         for e in self._phone_calls:
             line_counter += 1
-            if e.hivas_hossz == self.longest_call_length:
+            if e.call_length == self.longest_call_length:
                 break
         return line_counter
 
