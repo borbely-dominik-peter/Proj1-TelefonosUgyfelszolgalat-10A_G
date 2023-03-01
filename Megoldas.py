@@ -5,7 +5,7 @@ class Megoldas:
     _phone_calls: list[Call]
 
     @property
-    def stat_hours(self):  # 3. task
+    def _stat_hours(self):  # 3. task
         stat_h: dict[int, int] = {}
         for e in self._phone_calls:
             if e.first_hour in stat_h:
@@ -17,7 +17,7 @@ class Megoldas:
     @property
     def stat_hours_print(self):  # 3. task
         values: str = ''
-        for key, value in self.stat_hours.items():
+        for key, value in self._stat_hours.items():
             values += f'{key} óra {value} hívás\n'
         return values
 
@@ -39,7 +39,7 @@ class Megoldas:
         return line_counter
 
     @property
-    def accepted_calls(self):  # 5/6.task
+    def _accepted_calls(self):  # 5/6.task
         accepted_list: list[Call] = []
         previous_values: int = 0
         for e in self._phone_calls:
@@ -52,30 +52,18 @@ class Megoldas:
     def last_accepted_call_line(self):  # 6. task
         counter: int = 0
         for e in self._phone_calls:
-            if e == self.accepted_calls[-1]:
+            if e == self._accepted_calls[-1]:
                 counter += 1
                 break
             else:
                 counter += 1
         return counter
 
-    # @property
-    # def last_caller_waiting_time(self):  # 6. task
-    #     last_value: int = 0
-    #     second_last_value: int = 0
-    #     for e in self._phone_calls:
-    #         if e == self.accepted_calls[-1]:
-    #             last_value = e.start_in_sec
-    #             break
-    #         elif e == self.accepted_calls[-2]:
-    #             second_last_value = e.end_in_sec
-    #     return second_last_value - last_value
-
     @property
     def accepted_callers_text(self):  # 7. Task
         index_checker: int = 0
         for e in self._phone_calls:
-            if e in self.accepted_calls:
+            if e in self._accepted_calls:
                 with open('sikeres.txt', 'a', encoding='UTF-8') as file:
                     file.write(f'{index_checker} {e.first_hour} {e.first_min} {e.first_sec} {e.last_hour} {e.last_min} {e.last_sec}\n')
             index_checker += 1
@@ -83,8 +71,8 @@ class Megoldas:
 
     @property
     def last_caller_waiting_time(self):  # 6. task
-        last_value: int = self.accepted_calls[-1].start_in_sec
-        second_last_value: int = self.accepted_calls[-2].end_in_sec
+        last_value: int = self._accepted_calls[-1].start_in_sec
+        second_last_value: int = self._accepted_calls[-2].end_in_sec
         return second_last_value - last_value
 
     def __init__(self, txt_name: str):
@@ -120,7 +108,7 @@ class Megoldas:
         a_line_value: int = self._phone_calls[-1].start_in_sec
         counter: int = 0
         self._phone_calls.pop()
-        for e in self.accepted_calls:
+        for e in self._accepted_calls:
             if e.end_in_sec >= a_line_value:
                 break
             else:

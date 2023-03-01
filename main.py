@@ -2,9 +2,7 @@ from Megoldas import Megoldas
 
 
 def main() -> None:
-    # beolvasás
     phone: Megoldas = Megoldas('hivas.txt')
-    # print(len(phone.phone_calls))  # test hogy működik e a inicializálás
 
     print('3. feladat')
     print(phone.stat_hours_print)
