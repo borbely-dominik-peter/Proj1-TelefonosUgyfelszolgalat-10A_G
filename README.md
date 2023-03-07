@@ -16,8 +16,7 @@ Csapattagok:
 	- Python programozási nyelvvel
 
 ## Felhasznált címkék:
-	- Task: Általános feladatok
-	- Need Change: Ki kell javítani a létező jelenlegi hibát
+	- Task: Általános feladatokt
 	- File Bug: Hibák javítása
 	- Help wanted: Segítség kell a feladat megoldásához
 	- Invalid: hibás, szükségtelen, törölni kell
